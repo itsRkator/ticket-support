@@ -13,6 +13,7 @@ const SupportAgentForm = () => {
     phone: "",
     description: "",
   });
+  const [isValidInput, setIsValidInput] = useState('');
 
   useEffect(() => {
     setAgentInfo({
@@ -39,19 +40,33 @@ const SupportAgentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const createdAgent = await addSupportAgent(agentInfo);
-      if (createdAgent) {
-        setStatus("success");
+      setIsValidInput(isValidData(agentInfo.email, agentInfo.phone));
+      if (isValidInput) {
+        const createdAgent = await addSupportAgent(agentInfo);
+        if (createdAgent) {
+          setStatus("success");
+        } else {
+          setStatus("failed");
+        }
+        setTimeout(() => {
+          setStatus("");
+        }, 2000);
+        handleResetForm();
       } else {
-        setStatus("failed");
+        setTimeout(() => {
+          setIsValidInput("");
+        }, 2000);
+        throw Error("Invalid email or phone");
       }
-      setTimeout(() => {
-        setStatus("");
-      }, 2000);
-      handleResetForm();
     } catch (err) {
       console.log("Error creating Support Agent: ", err);
     }
+  };
+
+  const isValidData = (email, phone) => {
+    const phoneRegex = /^\d{10}$/;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email) && phoneRegex.test(phone);
   };
 
   return (
@@ -105,6 +120,21 @@ const SupportAgentForm = () => {
             }}
           >
             Error creating agent.
+          </p>
+        )}
+        {isValidInput === false && (
+          <p
+            style={{
+              fontWeight: "bolder",
+              textAlign: "center",
+              border: "1px solid red",
+              padding: "1rem",
+              background: "#ff00001f",
+              borderRadius: "1rem",
+              color: "#ff0000",
+            }}
+          >
+            Invalid email or phone.
           </p>
         )}
 

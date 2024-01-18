@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { useSupportContext } from "../context/SupportContext";
 
-import { Button, Grid, TextField } from "@mui/material";
+import { Button, Grid, MenuItem, Select, TextField } from "@mui/material";
 
 const SupportTicketForm = () => {
   const { addSupportTicket } = useSupportContext();
@@ -45,6 +45,11 @@ const SupportTicketForm = () => {
     }
   };
 
+  // const valideateUserInput = (severity) => {
+  //   const severityArr = ["High", "Medium", "Low"]
+  //   if()
+  // }
+
   return (
     <div
       style={{
@@ -61,7 +66,8 @@ const SupportTicketForm = () => {
           margin: "auto",
           justifyContent: "center",
           alignContent: "center",
-          boxShadow: "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
+          boxShadow:
+            "0px 2px 1px -1px rgba(0,0,0,0.2), 0px 1px 1px 0px rgba(0,0,0,0.14), 0px 1px 3px 0px rgba(0,0,0,0.12)",
           padding: "2rem",
         }}
       >
@@ -124,7 +130,24 @@ const SupportTicketForm = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
+              <Select
+                name="severity"
+                variant="outlined"
+                value={ticketInfo.severity}
+                onChange={handleInputChange}
+                fullWidth
+                required
+                displayEmpty
+                inputProps={{ "aria-label": "Select Severity" }}
+              >
+                <MenuItem value="" disabled>
+                  Select Value
+                </MenuItem>
+                <MenuItem value="option1">High</MenuItem>
+                <MenuItem value="option2">Medium</MenuItem>
+                <MenuItem value="option3">Low</MenuItem>
+              </Select>
+              {/* <TextField
                 name="severity"
                 label="Severity"
                 variant="outlined"
@@ -132,7 +155,7 @@ const SupportTicketForm = () => {
                 onChange={handleInputChange}
                 fullWidth
                 required
-              />
+              /> */}
             </Grid>
             <Grid item xs={12}>
               <TextField

@@ -143,9 +143,9 @@ const SupportTicketForm = () => {
                 <MenuItem value="" disabled>
                   Select Value
                 </MenuItem>
-                <MenuItem value="option1">High</MenuItem>
-                <MenuItem value="option2">Medium</MenuItem>
-                <MenuItem value="option3">Low</MenuItem>
+                <MenuItem value="High">High</MenuItem>
+                <MenuItem value="Medium">Medium</MenuItem>
+                <MenuItem value="Low">Low</MenuItem>
               </Select>
               {/* <TextField
                 name="severity"

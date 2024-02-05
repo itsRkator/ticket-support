@@ -40,8 +40,8 @@ const SupportAgentForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setIsValidInput(isValidData(agentInfo.email, agentInfo.phone));
-      if (isValidInput) {
+      const isDataValid = await isValidData(agentInfo.email, agentInfo.phone);
+      if (isDataValid) {
         const createdAgent = await addSupportAgent(agentInfo);
         if (createdAgent) {
           setStatus("success");
@@ -66,7 +66,9 @@ const SupportAgentForm = () => {
   const isValidData = (email, phone) => {
     const phoneRegex = /^\d{10}$/;
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email) && phoneRegex.test(phone);
+    const isInputValid = emailRegex.test(email) && phoneRegex.test(phone);
+    setIsValidInput(isInputValid)
+    return isInputValid;
   };
 
   return (
